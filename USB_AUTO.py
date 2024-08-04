@@ -1,8 +1,3 @@
-# sites : https://www.docstring.fr/glossaire/enumerate/    https://www.pythontutorial.net/tkinter/tkinter-after/    https://kinsta.com/fr/base-de-connaissances/variables-environnement/
-# regarder le module subprocess qui permet d'intégrer des commandes systèmes dans des scripts Python pour automatiser et contrôler des tâches (utilité ? je pensais que les appels systèmes le faisait déjà...)
-# se renseigner sur les commandes systèmes et internes
-
-
 import os
 import shutil
 import zipfile
@@ -13,20 +8,8 @@ import platform
 import threading
 from tkinter import messagebox
 from ttkthemes import ThemedTk
-import subprocess # peut lancer des commandes systèmes directement (pas forcément utile dans le sens ou des appels systèmes sont compris avec python ce qui permet une plus grande souplesse dans l'utilisation du système d'exploitation)
+import subprocess  
 import webbrowser
-
-
-# étapes pour faire un executable grace à Python (sous Windows) :
-    # - importer tous les modules utiles et surtout tkinter ainsi que ttkthemes pour rendre cela plus joli
-    # - rendre le rendu moins moche en prenant en compte la densité de points de l'écran (cf DpiAwareness)
-    # - si on utilise de la programmation orientée objet : créer la fonction init (qui est appelée en première) pour générer l'interface et la définir puis appeler toutes les méthodes qui ont besoin d'être appelées
-    # - ajouter des try et except pour générer plus facilement des erreurs détectables (facilité au maximum l'utilisation de l'exécutable) 
-    # - The use of Python's if __name__ == "__main__": makes the most sense in the following three scenarios:
-        # You want to write code that executes only when the script is run as a main program and not when it is imported as a module.
-        # You want to include test routines that run independently to validate functions defined in the file.
-        # You want to include demonstration code that will not execute upon module import.
-
 
 class FileManagerApp:
     def __init__(self, root):
@@ -53,26 +36,26 @@ class FileManagerApp:
         field2_frame = ttk.Frame(self.root, padding="5", style="TFrame")
         field2_frame.pack(fill=tk.BOTH, padx=5, pady=5)
         
-        frame = ttk.Frame(self.root, padding="5", style="TFrame") # Frame = container
-        frame.pack(fill=tk.X, padx=5, pady=5) # Fill = packs a widget inside a container, filling it
+        frame = ttk.Frame(self.root, padding="5", style="TFrame") 
+        frame.pack(fill=tk.X, padx=5, pady=5) 
     
-        self.client_num_label = ttk.Label(field_frame, text="Numéro d'affaire et numéro de série :", style="TLabel") # Pour écrire dans une frame
-        self.client_num_label.grid(row=0, column=0, columnspan=3, sticky="w", padx=(0, 5), pady=(0, 5)) # W means west, grid pour positionner les éléments et gérer leur taille
+        self.client_num_label = ttk.Label(field_frame, text="Numéro d'affaire et numéro de série :", style="TLabel") 
+        self.client_num_label.grid(row=0, column=0, columnspan=3, sticky="w", padx=(0, 5), pady=(0, 5)) 
     
-        self.client_num_entry = ttk.Entry(field_frame) # Entry = champ
+        self.client_num_entry = ttk.Entry(field_frame) 
         self.client_num_entry.grid(row=1, column=0, sticky="ew", padx=(0, 5))
-        self.client_num_entry.bind('<Return>', lambda event: self.serial_num_entry.focus_set()) # Fonction pour passer d'un champ à un autre en appuyant sur entrée
+        self.client_num_entry.bind('<Return>', lambda event: self.serial_num_entry.focus_set()) 
     
-        self.underscore_label = ttk.Label(field_frame, text="-", style="TLabel") # Pour écrire dans une frame
-        self.underscore_label.grid(row=1, column=1, sticky="ew") # Placer le tiret sur la même ligne
+        self.underscore_label = ttk.Label(field_frame, text="-", style="TLabel") 
+        self.underscore_label.grid(row=1, column=1, sticky="ew") 
     
-        self.serial_num_entry = ttk.Entry(field_frame) # Entry = champ
+        self.serial_num_entry = ttk.Entry(field_frame) 
         self.serial_num_entry.grid(row=1, column=2, sticky="ew", padx=(5, 0))
         self.serial_num_entry.bind('<Return>', lambda event: self.aff_num_entry.focus_set())
         
         
         
-        self.aff_num_entry = ttk.Entry(field2_frame) # Entry = champ
+        self.aff_num_entry = ttk.Entry(field2_frame) 
         self.aff_num_entry.pack(side=tk.TOP, fill=tk.X, expand=True, pady=(0, 5))
         self.aff_num_entry.bind('<Return>', lambda event: self.client_entry.focus_set())
     
@@ -439,7 +422,7 @@ class FileManagerApp:
         aff_number = self.aff_num_entry.get()
         model_type = self.model_var.get().upper()
         if not client_number or not client_name:
-            self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.documentation_indicator.config(bg="#ff4c4c") 
             return False
 
         usb_drives = []
@@ -448,7 +431,7 @@ class FileManagerApp:
                 usb_drives.append(partition.mountpoint)
 
         if not usb_drives:
-            self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.documentation_indicator.config(bg="#ff4c4c")  
             return False
 
         usb_path = usb_drives[0]
@@ -461,7 +444,7 @@ class FileManagerApp:
                 break
         
         if not project_folder_path:
-            self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.documentation_indicator.config(bg="#ff4c4c")  
             return False
         
         for item in os.listdir(r"S:\REALISATION_DU_PRODUIT\Client"):
@@ -470,7 +453,7 @@ class FileManagerApp:
                 break
             
         if not client_folder_path:
-            self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.documentation_indicator.config(bg="#ff4c4c")  
             return False  
         
         for item in os.listdir(client_folder_path):
@@ -479,7 +462,7 @@ class FileManagerApp:
                 break
         
         if not client_folder_path:
-              self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+              self.documentation_indicator.config(bg="#ff4c4c") 
               return False    
           
         for item in os.listdir(client_folder_path):
@@ -489,7 +472,7 @@ class FileManagerApp:
                 break
          
         if not client_folder_path:
-              self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+              self.documentation_indicator.config(bg="#ff4c4c")  
               return False  
 
         try:
@@ -522,10 +505,10 @@ class FileManagerApp:
                         
                     
                     
-            self.documentation_indicator.config(bg="#4caf50")  # Vert vif pour une meilleure visibilité
+            self.documentation_indicator.config(bg="#4caf50")  
             return True
         except Exception as e:
-            self.documentation_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.documentation_indicator.config(bg="#ff4c4c")  
             print(f"Erreur lors de la copie de la documentation : {e}")
             return False
 
@@ -536,7 +519,7 @@ class FileManagerApp:
         serial_number = self.serial_num_entry.get()
         aff_number = self.aff_num_entry.get()
         if not client_number or not client_name:
-            self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#ff4c4c") 
             return False
 
         usb_drives = []
@@ -545,7 +528,7 @@ class FileManagerApp:
                 usb_drives.append(partition.mountpoint)
 
         if not usb_drives:
-            self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#ff4c4c")  
             return False
 
         usb_path = usb_drives[0]
@@ -558,7 +541,7 @@ class FileManagerApp:
                 break
         
         if not project_folder_path:
-            self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#ff4c4c")  
             return False
         
         for item in os.listdir(r"S:\REALISATION_DU_PRODUIT\Client"):
@@ -567,7 +550,7 @@ class FileManagerApp:
                 break
             
         if not client_folder_path:
-            self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#ff4c4c")  
             return False  
         
         for item in os.listdir(client_folder_path):
@@ -576,7 +559,7 @@ class FileManagerApp:
                 break
         
         if not client_folder_path:
-              self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+              self.backup_indicator.config(bg="#ff4c4c")  
               return False    
           
         for item in os.listdir(client_folder_path):
@@ -585,7 +568,7 @@ class FileManagerApp:
                 break
          
         if not client_folder_path:
-              self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+              self.backup_indicator.config(bg="#ff4c4c")  
               return False  
         
         for item in os.listdir(client_folder_path):
@@ -594,7 +577,7 @@ class FileManagerApp:
                 break
             
         if not client_folder_path:
-            self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#ff4c4c") 
             return False    
 
         try:
@@ -609,10 +592,10 @@ class FileManagerApp:
             for zip_file in zip_files:
                 shutil.copy2(os.path.join(client_folder_path, zip_file), backup_folder_path)
 
-            self.backup_indicator.config(bg="#4caf50")  # Vert vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#4caf50")  
             return True
         except Exception as e:
-            self.backup_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.backup_indicator.config(bg="#ff4c4c")  
             print(f"Erreur lors de la copie du Backup : {e}")
             return False
 
@@ -625,7 +608,7 @@ class FileManagerApp:
        aff_number = self.aff_num_entry.get()
        
        if not client_number or not client_name:
-           self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+           self.drawing_indicator.config(bg="#ff4c4c")  
            return False
 
        usb_drives = []
@@ -634,7 +617,7 @@ class FileManagerApp:
                usb_drives.append(partition.mountpoint)
 
        if not usb_drives:
-           self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+           self.drawing_indicator.config(bg="#ff4c4c")  
            return False
 
        usb_path = usb_drives[0]
@@ -647,7 +630,7 @@ class FileManagerApp:
                break
        
        if not project_folder_path:
-           self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+           self.drawing_indicator.config(bg="#ff4c4c")  
            return False
        
        for item in os.listdir(r"S:\REALISATION_DU_PRODUIT\Produits HEXAPODE"):
@@ -656,7 +639,7 @@ class FileManagerApp:
                break
            
        if not client_folder_path:
-           self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+           self.drawing_indicator.config(bg="#ff4c4c")  
            return False  
        
        for item in os.listdir(client_folder_path):
@@ -665,7 +648,7 @@ class FileManagerApp:
                break
        
        if not client_folder_path:
-             self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+             self.drawing_indicator.config(bg="#ff4c4c")  
              return False    
          
        for item in os.listdir(client_folder_path):
@@ -674,7 +657,7 @@ class FileManagerApp:
                break
         
        if not client_folder_path:
-             self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+             self.drawing_indicator.config(bg="#ff4c4c")  
              return False  
     
        if model_name == "BORA" or model_name == "JORAN" or model_name == "MISTRAL" or model_name == "NOTUS" or model_name == "ZONDA" :
@@ -697,10 +680,10 @@ class FileManagerApp:
            for file in files:
                shutil.copy2(os.path.join(client_folder_path, file), drawing_folder_path)
 
-           self.drawing_indicator.config(bg="#4caf50")  # Vert vif pour une meilleure visibilité
+           self.drawing_indicator.config(bg="#4caf50")  
            return True
        except Exception as e:
-           self.drawing_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+           self.drawing_indicator.config(bg="#ff4c4c")  
            print(f"Erreur lors de la copie des dessins : {e}")
            return False
 
@@ -718,7 +701,7 @@ class FileManagerApp:
         aff_number = self.aff_num_entry.get()
     
         if not client_number or not client_name:
-            self.livrable_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.livrable_indicator.config(bg="#ff4c4c")  
             return False
     
         usb_drives = []
@@ -727,7 +710,7 @@ class FileManagerApp:
                 usb_drives.append(partition.mountpoint)
     
         if not usb_drives:
-            self.livrable_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.livrable_indicator.config(bg="#ff4c4c") 
             return False
     
         usb_path = usb_drives[0]
@@ -740,14 +723,14 @@ class FileManagerApp:
                 break
     
         if not project_folder_path:
-            self.livrable_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.livrable_indicator.config(bg="#ff4c4c")  
             return False
     
         if not client_folder_path:
             self.livrable_indicator.config(bg="ff4c4c")
             return False
 
-        # Ouvrir le dossier source dans l'explorateur de fichiers dans une nouvelle fenêtre Toplevel
+        
         toplevel = tk.Toplevel(self.root)
         toplevel.title("Navigation des fichiers")
         toplevel.geometry("800x600+498+8")
@@ -755,22 +738,22 @@ class FileManagerApp:
         tree = ttk.Treeview(toplevel)
         tree.pack(fill=tk.BOTH, expand=True)
         
-        # Stocker les chemins des fichiers dans un dictionnaire pour y accéder facilement lors de l'ouverture
+        
         self.treeview_paths = {}
         self.insert_treeview_items(tree, project_folder_path)
         
-        # Attacher le gestionnaire d'événements pour le double-clic
+        
         tree.bind("<Double-1>", self.open_file)
         
-        # Ajouter un bouton pour fermer la fenêtre
+        
         close_button = ttk.Button(toplevel, text="Fermer", command=toplevel.destroy)
         close_button.pack(pady=10)
         
-        # Attendre la fermeture de la fenêtre Toplevel avant de continuer
+        
         self.root.wait_window(toplevel)
 
 
-        # Afficher un pop-up pour demander la conformité des fichiers
+        
         confirmation = messagebox.askyesno("Vérification des fichiers", "Les fichiers sont-ils conformes ?")
     
         if confirmation:
@@ -798,14 +781,14 @@ class FileManagerApp:
                     print(f"Dossier parent supprimé: {project_folder_path}")
                 except OSError as e:
                     print(f"Erreur: {e} - le dossier n'est peut-être pas vide.")
-                self.livrable_indicator.config(bg="#4caf50")  # Vert vif pour une meilleure visibilité
+                self.livrable_indicator.config(bg="#4caf50")  
                 return True
             except Exception as e:
-                self.livrable_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+                self.livrable_indicator.config(bg="#ff4c4c")  
                 print(f"Une erreur s'est produite : {e}")
                 return False
         else:
-            self.livrable_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.livrable_indicator.config(bg="#ff4c4c")  
             messagebox.showerror("Erreur", "Les fichiers ne sont pas conformes.")
             return False
     
@@ -813,7 +796,7 @@ class FileManagerApp:
         for item in os.listdir(path):
             item_path = os.path.join(path, item)
             item_id = tree.insert(parent, "end", text=item, open=False)
-            self.treeview_paths[item_id] = item_path  # Stocker le chemin complet de l'élément
+            self.treeview_paths[item_id] = item_path  
             if os.path.isdir(item_path):
                 self.insert_treeview_items(tree, item_path, item_id)
 
@@ -846,7 +829,7 @@ class FileManagerApp:
             return True
         except Exception as e:
             print(f"Erreur lors du renommage de la clé USB : {e}")
-            self.run_procedure_indicator.config(bg="#ff4c4c")  # Rouge vif pour une meilleure visibilité
+            self.run_procedure_indicator.config(bg="#ff4c4c")  
             return False
 
     def start_procedure_thread(self):
