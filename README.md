@@ -1,4 +1,4 @@
-# Programme-Python - Stage
+# Documents annexes / stage
 
-Ici vous pouvez retrouver le fichier Python que j'ai écrit durant mon stage de CI1 ainsi que l'organigramme de son fonctionnement 
+Vous pouvez retrouver ici les différents fichiers présentés dans mon rapport de stage de CI1.
 
